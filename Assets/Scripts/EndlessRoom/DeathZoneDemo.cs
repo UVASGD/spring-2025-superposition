@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class DeathZoneDemo : MonoBehaviour {
     public Image fader;
     public Transform destination;
+    public GameObject wallToEnable;
+    public List<GameObject> deathZonesToDisable;
 
     void OnTriggerStay(Collider other) {
         if (other.gameObject.tag == "Player") {
@@ -15,6 +18,10 @@ public class DeathZoneDemo : MonoBehaviour {
                 fader.DOFade(0f, 1f).OnComplete(() => {
                     fader.gameObject.SetActive(false);
                     EndlessRoomManager.Instance.player.SetActive(true);
+                    wallToEnable.SetActive(true);
+                    foreach (GameObject deathZone in deathZonesToDisable) {
+                        deathZone.SetActive(false);
+                    }
                 });
             });
         }

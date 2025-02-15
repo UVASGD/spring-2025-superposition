@@ -8,8 +8,8 @@ public class EndlessRoomManager : MonoBehaviour {
     public TeleportingEndlessRoomIllusion teleportingA3EndlessRoomIllusion;
     public TeleportingEndlessRoomIllusion teleportingA4EndlessRoomIllusion;
     public int numA3Triggered = 0;
-    public List<MazeGenerator> mazeGenerators;
-    public GameObject player;
+    public MazeGenerator mazeGenerator;
+    [HideInInspector] public GameObject player;
 
     void Awake() {
         if (Instance == null) {
