@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(TeleportingIllusionBase))]
-public class PaintingTeleportInteractable : TestInteractable
+public class PaintingTeleportInteractable : Interactable
 {
     [SerializeField] private GameplayUI paintingGameplayUI;
     private TeleportingIllusionBase teleportingIllusion;
