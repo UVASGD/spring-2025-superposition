@@ -10,6 +10,8 @@ public class EndlessRoomManager : MonoBehaviour {
     public int numA3Triggered = 0;
     public GameObject mazeBoard;
     public MazeGenerator mazeGenerator;
+    public int numWallsHittingEndSegment = 0;
+    public DoorTriggerMovingWalls doorTriggerMovingWalls;
     [HideInInspector] public GameObject player;
     public float cameraMoveZoomTime = 1f;
 
