@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class SettingsMenu : MonoBehaviour
 {
@@ -39,6 +40,10 @@ public class SettingsMenu : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
+        resolutionDropdown.style.maxHeight = 200; // Set maximum height
+        resolutionDropdown.style.overflow = Overflow.Hidden;
+        resolutionDropdown.style.overflowClipBox = OverflowClipBox.ContentBox;
 
         Screen.fullScreen = true;
     }
