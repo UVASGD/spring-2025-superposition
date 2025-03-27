@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49fe99c83b7ad4c45b4a1f0d7bb162dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactUI_GO: {fileID: 0}
+  interactUI_GO: {fileID: 2297216459122082077}
   interactUI_Text: {fileID: 0}
   interactDistance: 500000
   scaleTime: 0.25
