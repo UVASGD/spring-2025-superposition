@@ -35,4 +35,14 @@ public class PlayerCameraMovement : MonoBehaviour
             }
         }
     }
+
+    public void lockPan()
+    {
+        canPan = false;
+    }
+
+    public void unlockPan()
+    {
+        canPan = true;
+    }
 }
