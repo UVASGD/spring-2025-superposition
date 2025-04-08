@@ -2,29 +2,60 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public Settings gameSettings;
+    [Header("Audio Sources")]
+    public AudioSource musicSource;
+    public AudioSource sfxSource;
 
-    float master_vol;
-    float music_vol;
-    float sfx_vol;
+    [Header("Audio Clips")]
+    public AudioClip menuBackgroundMusic;
+    public AudioClip inGameBackgroundMusic;
+    public AudioClip button;
+    public AudioClip pickup;
 
-    [SerializeField] private AudioSource music;
-    [SerializeField] private AudioSource sfx;
+    public static AudioManager audioManagerInstance;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
-        // Grab all the current settings for the game established by the player
-        master_vol = gameSettings.master_vol;
-        music_vol = gameSettings.music_vol;
-        sfx_vol = gameSettings.sfx_vol;
-
-
+        if (audioManagerInstance == null)
+        {
+            audioManagerInstance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        { 
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        PlayMusic(menuBackgroundMusic);
+    }
+
+    public void PlayMusic(AudioClip musicClip)
+    {
+        if (musicSource != null && musicClip != null)
+        { 
+            musicSource.clip = musicClip;
+            musicSource.loop = true;
+            musicSource.Play();
+        }
+    }
+
+    public void PlaySFX(AudioClip sfxClip)
+    {
+        if (sfxSource != null && sfxClip != null)
+        {
+            sfxSource.clip = sfxClip;
+            sfxSource.PlayOneShot(sfxClip);
+        }
+    }
+
+    public void StopMusic()
+    {
+        if(musicSource != null)
+        { 
+            musicSource.Stop(); 
+        }
     }
 }
