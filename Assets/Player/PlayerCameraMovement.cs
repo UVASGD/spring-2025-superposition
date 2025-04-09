@@ -1,3 +1,4 @@
+// using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,7 +7,7 @@ public class PlayerCameraMovement : MonoBehaviour
     [SerializeField] private GameObject head;
     [SerializeField] private InputAction mouseX;
     [SerializeField] private InputAction mouseY;
-    [SerializeField] public float mouseSense;
+    [SerializeField] private float mouseSense;
     public bool canPan = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
