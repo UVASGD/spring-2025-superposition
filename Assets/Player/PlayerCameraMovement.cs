@@ -1,3 +1,4 @@
+// using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -34,5 +35,15 @@ public class PlayerCameraMovement : MonoBehaviour
                 head.transform.localRotation = Quaternion.Euler(head.transform.localEulerAngles.x, 0, 0);
             }
         }
+    }
+
+    public void lockPan()
+    {
+        canPan = false;
+    }
+
+    public void unlockPan()
+    {
+        canPan = true;
     }
 }
