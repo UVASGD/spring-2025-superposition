@@ -15,6 +15,7 @@ public class ufoAI : MonoBehaviour
     private Vector3 homePosition;
     private Vector3 lastKnownPlayerPos;
     private float searchTimer;
+    private bool canDetectPlayer = true;
 
     public GameObject laserBeam; 
     private bool beamActive = false;
@@ -176,22 +177,50 @@ public class ufoAI : MonoBehaviour
 
     void DoSearchLostArea()
     {
-        transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
+        if (!beamActive)
+        {
+            // Reactivate the beam while searching
+            beamActive = true;
+            laserBeam.SetActive(true);
+            laserBeam.transform.localScale = initialLaserScale;
+            isGrowing = true;
+            laserTimer = 0f;
+            laserCanDamage = false;
+        }
+
+        // Sweep rotation (rotate back and forth)
+        float sweepAngle = Mathf.Sin(Time.time * rotateSpeed) * 45f; // 45 degree sweep
+        transform.rotation = Quaternion.Euler(0f, sweepAngle + homePosition.y, 0f);
+
         searchTimer -= Time.deltaTime;
 
-        Vector3 flatUFOPos = new Vector3(transform.position.x, 0f, transform.position.z);
-        Vector3 flatPlayerPos = new Vector3(player.position.x, 0f, player.position.z);
-        float flatDistanceToPlayer = Vector3.Distance(flatUFOPos, flatPlayerPos);
+        // Only switch to Attacking if player is visible and in range
+        if (CanSeePlayer())
+        {
+            float flatDistanceToPlayer = Vector3.Distance(
+                new Vector3(transform.position.x, 0f, transform.position.z),
+                new Vector3(player.position.x, 0f, player.position.z)
+            );
 
-        if (flatDistanceToPlayer <= attackRange)
-        {
-            currentState = State.Attacking;
+            if (flatDistanceToPlayer <= attackRange)
+            {
+                Debug.Log("[SearchingLostArea] Player found! Switching to Attacking.");
+                canDetectPlayer = true; // Allow detection again
+                currentState = State.Attacking;
+                return;
+            }
         }
-        else if (searchTimer <= 0)
+
+        if (searchTimer <= 0)
         {
+            Debug.Log("[SearchingLostArea] Search timed out. Returning to base.");
+            laserBeam.SetActive(false);
+            beamActive = false;
+            canDetectPlayer = true; // Allow detection again
             currentState = State.Returning;
         }
     }
+
 
     void DoReturning()
     {
@@ -236,15 +265,19 @@ public class ufoAI : MonoBehaviour
             laserBeam.SetActive(false);
             beamActive = false;
 
-            // ALSO, if still in Attacking, exit to SearchingLostArea
+            // Also, if still in Attacking, exit to SearchingLostArea
             if (currentState == State.Attacking)
             {
                 Debug.Log("[Beam] Lost player during Attacking. Switching to SearchingLostArea.");
+
                 currentState = State.SearchingLostArea;
                 searchTimer = searchDuration;
+
+                canDetectPlayer = false; // Prevent immediate re-detection during searching
             }
         }
     }
+
 
     bool CanSeePlayer()
     {
