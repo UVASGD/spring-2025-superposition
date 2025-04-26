@@ -39,8 +39,11 @@ namespace MEET_AND_TALK
 
         private void Update()
         {
-            if (Timer > 0) dialogueUIManager.TimerSlider.value = Timer;
-            else {
+            if (Timer > 0) {
+                dialogueUIManager.TimerSlider.value = Timer;
+                Timer -= Time.deltaTime; 
+            }
+            else {                
                 switch (currentDialogueNodeData)
                 {
                     case DialogueNodeData:

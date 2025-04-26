@@ -16,5 +16,5 @@ MonoBehaviour:
   - languageEnum: 0
     LanguageGenericType: Main Char
   - languageEnum: 1
-    LanguageGenericType: 
+    LanguageGenericType: Main Char
   textColor: {r: 0, g: 1, b: 0.12582779, a: 1}
