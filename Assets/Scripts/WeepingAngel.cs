@@ -14,6 +14,7 @@ public class WeepingAngel : QuantumObjectBase
     public Transform player;
 
     public Animator aiAnim;
+    public Animator headAnim;
 
     public AudioSource src;
     public AudioClip scareSfx; //footsteps later(?)
@@ -23,6 +24,7 @@ public class WeepingAngel : QuantumObjectBase
     public Camera playerCam, jumpscareCam;
     public float aiSpeed, catchDistance, jumpscareTime;
     public string sceneAfterDeath;
+    public GameObject mannequin;
 
     public float distanceBeforeActivation;
 
@@ -36,7 +38,7 @@ public class WeepingAngel : QuantumObjectBase
 
     private async void Update()
     {
-        Debug.Log(firstLookedAt);
+        //Debug.Log(firstLookedAt);
         if (isTransitioningScene || player == null)
             return;
 
@@ -70,16 +72,18 @@ public class WeepingAngel : QuantumObjectBase
             lookSfxPlayed = false;
             if (distance <= catchDistance)
             {
-                jumpscareCam.gameObject.SetActive(true);
+                //jumpscareCam.gameObject.SetActive(true);
                 // Wait for the camera to fully activate
-                await WaitForCameraActivation(jumpscareCam);
-                player.gameObject.SetActive(false);
+                
+                //player.gameObject.SetActive(false);
+                mannequin.SetActive(true);
 
                 if (!jmpSfxPlayed)
                 {
                     playScareSfx();
                     jmpSfxPlayed = true;
-                    aiAnim.SetTrigger("Jumpscare");
+                    //aiAnim.SetTrigger("Jumpscare");
+                    headAnim.enabled = true;
                 }
 
                 StartCoroutine(killPlayer());
