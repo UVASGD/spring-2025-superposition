@@ -1353,8 +1353,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canInteract: 1
-  lights:
-  - {fileID: 1760570988}
+  disable: []
+  enable: []
+  quantumConsiderLit: []
   flashlightPrefab: {fileID: 8169376491158492898, guid: 45fcceb4da06c6645873f714314f8361, type: 3}
 --- !u!1 &1037690105
 GameObject:
@@ -2001,7 +2002,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1785874070
 MonoBehaviour:
   m_ObjectHideFlags: 0
