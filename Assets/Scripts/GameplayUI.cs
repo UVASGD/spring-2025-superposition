@@ -8,6 +8,8 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private GameObject player;
     private RectTransform rt;
     public bool active;
+    public Noteboard firstNoteboard;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -82,12 +84,20 @@ public class GameplayUI : MonoBehaviour
     {
         active = false;
         panel.SetActive(false);
+        firstNoteboard.canInteract = false;
         if (player != null)
         {
-            player.GetComponent<PlayerMovement>().unlockMovement();
-            player.GetComponent<PlayerCameraMovement>().unlockPan();
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            Camera.main.transform.DOLocalMove(Vector3.zero, EndlessRoomManager.Instance.cameraMoveZoomTime);
+            Camera.main.transform.DORotate(EndlessRoomManager.Instance.player.transform.rotation.eulerAngles, EndlessRoomManager.Instance.cameraMoveZoomTime).OnComplete(
+                () => {
+                    player.GetComponent<PlayerMovement>().unlockMovement();
+                    player.GetComponent<PlayerCameraMovement>().unlockPan();
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                    firstNoteboard.canInteract = true;
+                }
+            );
+            
         }
     }
 }
