@@ -37,8 +37,6 @@ public class WeepingAngel : QuantumObjectBase
     [SerializeField] public Transform playerRespawnPos;
     [SerializeField] private Transform weepRespawnPos;
 
-
-
     private async void Update()
     {
         //Debug.Log(firstLookedAt);
@@ -59,7 +57,7 @@ public class WeepingAngel : QuantumObjectBase
             }
             if (!lookSfxPlayed)
             {
-                playLookSfx();
+                // playLookSfx();
                 lookSfxPlayed = true;
             }
             
@@ -81,9 +79,12 @@ public class WeepingAngel : QuantumObjectBase
                 //player.gameObject.SetActive(false);
                 mannequin.SetActive(true);
 
+                AudioManager.audioManagerInstance.PlaySFX(AudioManager.audioManagerInstance.footsteps);
+
                 if (!jmpSfxPlayed)
                 {
-                    playScareSfx();
+                    // Not audible?
+                    // AudioManager.audioManagerInstance.PlaySFX(AudioManager.audioManagerInstance.jumpscare);
                     jmpSfxPlayed = true;
                     //aiAnim.SetTrigger("Jumpscare");
                     headAnim.enabled = true;
@@ -117,8 +118,7 @@ public class WeepingAngel : QuantumObjectBase
 
     private void playLookSfx()
     {
-        src.clip = shockSfx;
-        src.Play();
+        AudioManager.audioManagerInstance.PlaySFX(AudioManager.audioManagerInstance.vineboom);
     }
 
     private async Task WaitForCameraActivation(Camera cam)
