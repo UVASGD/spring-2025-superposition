@@ -42,7 +42,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip keypadButton;
     public AudioClip keypadDenied;
     public AudioClip keypadGranted;
-    public AudioClip vineboom;
+    public AudioClip vineboom; 
     public AudioClip footsteps;
 
     [Header("Cutscene")]
@@ -105,6 +105,16 @@ public class AudioManager : MonoBehaviour
             musicSource.clip = musicClip;
             musicSource.loop = true;
             musicSource.Play();
+        }
+    }
+
+    public void PlaySFXRepeat(AudioClip sfxClip)
+    {
+        if (sfxSource != null && sfxClip != null)
+        {
+            sfxSource.clip = sfxClip;
+            sfxSource.loop = true;
+            sfxSource.Play();
         }
     }
 
