@@ -41836,6 +41836,7 @@ MonoBehaviour:
   distanceBeforeActivation: 8
   playerRespawnPos: {fileID: 1913871710}
   weepRespawnPos: {fileID: 140571532}
+  fader: {fileID: 1277077958}
 --- !u!195 &1559103160
 NavMeshAgent:
   m_ObjectHideFlags: 0

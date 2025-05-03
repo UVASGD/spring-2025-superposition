@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 using System;
 using System.Threading.Tasks;
 using UnityEngine.Audio;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class WeepingAngel : QuantumObjectBase
 {
@@ -37,6 +39,7 @@ public class WeepingAngel : QuantumObjectBase
 
     [SerializeField] public Transform playerRespawnPos;
     [SerializeField] private Transform weepRespawnPos;
+    [SerializeField] private Image fader;
 
     // private int num_lookAt = 0;
 
@@ -97,6 +100,7 @@ public class WeepingAngel : QuantumObjectBase
 
                 if (!jmpSfxPlayed)
                 {
+                    AudioManager.audioManagerInstance.PlaySFX(AudioManager.audioManagerInstance.jumpscare);
                     jmpSfxPlayed = true;
                     //aiAnim.SetTrigger("Jumpscare");
                     headAnim.enabled = true;
@@ -113,13 +117,39 @@ public class WeepingAngel : QuantumObjectBase
         isTransitioningScene = true;
         yield return new WaitForSeconds(jumpscareTime);
         headAnim.enabled = false;
-        player.transform.position = playerRespawnPos.position;
+        transform.position = weepRespawnPos.position;
+        
+        /*
+            fader.gameObject.SetActive(true);
+            fader.DOFade(1f, 1f).OnComplete(() => {
+                player.transform.position = destination.position;
+                fader.DOFade(0f, 1f).OnComplete(() => {
+                    fader.gameObject.SetActive(false);
+                    player.GetComponent<PlayerMovement>().enabled = true;
+                    player.GetComponent<PlayerCameraMovement>().enabled = true;
+                    wallToEnable.SetActive(true);
+                    foreach (GameObject deathZone in deathZonesToDisable) {
+                        deathZone.SetActive(false);
+                    }
+                });
+            });
+         */
         mannequin.SetActive(false);
         isTransitioningScene = false;
-        transform.position = weepRespawnPos.position;
         firstLookedAt = true;
         jmpSfxPlayed = false;
         ai.speed = 0;
+        if(fader != null)
+        {
+            fader.gameObject.SetActive(true);
+            fader.DOFade(1f, 1f).OnComplete(() => {
+                Debug.Log("teleport");
+                player.transform.position = playerRespawnPos.position;
+                fader.DOFade(0f, 1f).OnComplete(() => {
+                    fader.gameObject.SetActive(false);
+                });
+            });
+        }
     }
 
     private void playScareSfx()
